@@ -4,7 +4,7 @@
 > Built for embedded networking, low-footprint hardware (16 MB SPI Flash / 128–256 MB RAM), and dual-generation OpenWrt architectures (`fw3`/`iptables` vs `fw4`/`nftables` and `opkg` vs `apk`).
 
 [![OpenWrt Version](https://img.shields.io/badge/OpenWrt-19.07_%E2%86%92_25.12+-blue?logo=openwrt)](https://openwrt.org)
-[![Skills Count](https://img.shields.io/badge/Agentic%20Skills-10%20Production%20Ready-success)](https://github.com/Despensativo/OpenWrt-Skills)
+[![Skills Count](https://img.shields.io/badge/Agentic%20Skills-11%20Production%20Ready-success)](https://github.com/Despensativo/OpenWrt-Skills)
 [![Hardware Database](https://img.shields.io/badge/ToH%20Models-3%2C030%20Offline%20Cached-orange)](https://github.com/Despensativo/OpenWrt-Skills)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -25,7 +25,7 @@ Developing for resource-constrained routers (e.g. 16 MB SPI Flash and 128 MB RAM
 
 ---
 
-## 🧩 The 10 Specialized Agent Skills
+## 🧩 The 11 Specialized Agent Skills
 
 Each skill adheres to the open Agentic Skill format (`SKILL.md` with standard YAML frontmatter) located in both `.agents/skills/` and `skills/`:
 
@@ -41,6 +41,7 @@ Each skill adheres to the open Agentic Skill format (`SKILL.md` with standard YA
 | 8 | **[`openwrt-wifi-mesh`](skills/openwrt-wifi-mesh/SKILL.md)** | Roaming & 802.11s Mesh | 802.11r/k/v Fast Transition, lightweight `usteer` band steering (-73 dBm threshold), SAE mesh backhaul. |
 | 9 | **[`openwrt-sqm-bufferbloat`](skills/openwrt-sqm-bufferbloat/SKILL.md)** | CAKE & Latency Mitigation | CAKE (`piece_of_cake.qos`), OpenWrt 25.12 multi-core `cake-mq`, PPPoE/fiber framing overhead, A+ grade tuning. |
 | 10 | **[`openwrt-storage-failsafe`](skills/openwrt-storage-failsafe/SKILL.md)** | MTD & Unbrick Recovery | `/proc/mtd` partition tables, `factory`/ART backup preservation, Telnet Failsafe mode, U-Boot TFTP rescue. |
+| 11 | **[`openwrt-luci-modern`](skills/openwrt-luci-modern/SKILL.md)** | Modern LuCI Client-Side JS | Pure JS views (`L.view.extend`), `E()` DOM builder, JSON menus, RPC ACLs, no legacy Lua CBI. |
 
 ---
 

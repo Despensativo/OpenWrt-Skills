@@ -65,6 +65,7 @@ ARK Router must remain compatible with both generations:
 8. `openwrt-wifi-mesh`: 802.11r/k/v fast roaming, usteer, 802.11s mesh backhaul.
 9. `openwrt-sqm-bufferbloat`: CAKE, cake-mq multi-core, FQ-CoDel, framing overhead, A+ grade.
 10. `openwrt-storage-failsafe`: MTD partition table, factory/ART backup, Telnet failsafe, U-Boot TFTP.
+11. `openwrt-luci-modern`: Modern LuCI JavaScript views (L.view.extend), E() DOM builder, JSON menus, RPC ACLs, no Lua CBI.
 
 ### 6. Cursor AI & Assistant Commands Available
 - LuCI / Router: `/create-luci-view`, `/audit-ark-theme`, `/verify-router-health`
