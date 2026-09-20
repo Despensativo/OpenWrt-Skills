@@ -20,10 +20,10 @@ Configurar e auditar os mecanismos de aceleração de encaminhamento de pacotes 
    - Os pacotes seguintes pulam a maior parte do Netfilter diretamente para a camada de saída.
    - Reduz o consumo de CPU pela metade.
 3. **Hardware Flow Offloading (`flow_offloading_hw=1`):**
-   - Despeja as conexões ativas diretamente na tabela de silício do switch/SoC.
-   - No **MediaTek Filogic MT7981 (Cudy WR3000)**:
-     - **PPE (Packet Processing Engine):** Encaminha tráfego Gigabit cabeado a 1000 Mbps com < 3% de uso de CPU.
-     - **WED (Wireless Ethernet Dispatch):** Faz a ponte direta entre os rádios Wi-Fi MT7976 e a interface ethernet sem disparar interrupções na CPU!
+   - Transfere o encaminhamento de fluxos estabelecidos para o acelerador em silício do SoC.
+   - No **MediaTek Filogic MT7981 (ex.: Cudy WR3000)**:
+     - **PPE (Packet Processing Engine):** Projetado para acelerar tráfego Gigabit IPv4/IPv6 com baixa utilização de CPU, desde que o tráfego não dependa de qdiscs ou inspeções complexas. A carga real e o ganho de vazão devem ser verificados em testes com pacotes pequenos e grandes.
+     - **WED (Wireless Ethernet Dispatch):** Faz a ponte direta entre os rádios Wi-Fi MT7976 e a interface ethernet, reduzindo a sobrecarga de interrupções na CPU quando o driver do fabricante e do kernel estiverem habilitados para o modelo.
 
 ---
 

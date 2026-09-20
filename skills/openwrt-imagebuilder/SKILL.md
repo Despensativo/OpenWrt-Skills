@@ -10,18 +10,28 @@ Orientar a geração, compilação e validação de imagens de firmware OpenWrt 
 
 ---
 
-## 1. Orçamento Rígido de Memória Flash (16 MB SPI-NOR)
+## 1. Geometria de Flash por Família de Placa
 
-- **Geometria de Particionamento:**
+A geometria de partição varia drasticamente conforme o hardware alvo:
+
+### A. Roteadores com Flash SPI-NOR Restrita (16 MB — ex.: Cudy WR3000 v1, D-Link DGL-5500)
+- **Particionamento:**
   - `u-boot` + `env` + `factory`: ~1 MB
   - `kernel`: ~3 MB a 4 MB
   - `rootfs` (SquashFS comprimido): deve ficar entre **8 MB e 10.5 MB**
-  - `rootfs_data` (`/overlay` writable): DEVE manter **> 2.8 MB livres** no primeiro boot.
+  - `rootfs_data` (`/overlay` gravável): DEVE manter **> 2.0 MB livres** no primeiro boot.
 - **Tamanho Máximo do Binário Sysupgrade:**
-  - O arquivo final `*-sysupgrade.bin` NUNCA deve ultrapassar **14.5 MB** (alvo seguro no ARK Router: ~12.5 MB a 13.0 MB).
-- **Atenção a Revisões de Hardware (Alerta Fórum OpenWrt 243547):**
-  - O Cudy WR3000 v1 padrão utiliza flash SPI-NOR padrão (`filogic / cudy_wr3000-v1`).
-  - Lotes recentes de modelos variantes (WR3000E, WR3000H, AP3000 com seriais $\ge 2543$) possuem chips de flash alternativos que exigem checagem de DTS específico.
+  - O binário `*-sysupgrade.bin` NUNCA deve ultrapassar a partição de firmware do DTS (~14.5 MB; no Cudy WR3000 alvo seguro é ~12.5 MB a 13.0 MB).
+- **Atenção a Revisões de Hardware:**
+  - O Cudy WR3000 v1 padrão utiliza SPI-NOR padrão (`filogic / cudy_wr3000-v1`).
+  - Lotes ou variantes (ex: WR3000E/WR3000H) podem utilizar chips ou tamanhos de flash distintos; sempre consulte o DTS específico do target.
+
+### B. Roteadores com Flash NAND ou eMMC (128 MB a 1 GB+ — ex.: Acer Predator W6x, Filogic 830/880)
+- **Particionamento:**
+  - `kernel`: 6 MB a 10 MB.
+  - `rootfs`: 30 MB a 60 MB+ em partição UBI/SquashFS.
+  - `rootfs_data` (`/overlay`): dezenas a centenas de megabytes livres.
+- **Limites:** O binário sysupgrade pode ter 30 MB a 40 MB+ sem risco de esgotar o chip. Módulos opcionais pesados (ZeroTier, AdGuard Home em RAM, Python) podem ser integrados diretamente na imagem.
 
 ---
 

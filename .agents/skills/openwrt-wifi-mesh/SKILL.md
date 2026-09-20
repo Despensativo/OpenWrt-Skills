@@ -12,9 +12,10 @@ Configurar transição rápida e roaming contínuo entre pontos de acesso (APs),
 
 ## 1. Fast Roaming (802.11r, 802.11k e 802.11v)
 
-Para que dispositivos se desloquem pela casa sem queda em chamadas de voz ou jogos, os três protocolos devem operar em conjunto no `/etc/config/wireless`:
+Para que dispositivos clientes se desloquem entre pontos de acesso sem interrupções sensíveis, os três protocolos operam cooperativamente no `/etc/config/wireless`.
+*Nota: Os parâmetros abaixo (incluindo `mobility_domain`, limites de sinal e canais) são **exemplos ilustrativos** e devem ser adaptados ao layout físico e densidade dos pontos de acesso.*
 
-### Configuração em Cada `wifi-iface`:
+### Exemplo de Configuração em Cada `wifi-iface`:
 ```uci
 config wifi-iface 'default_radio0'
     option device 'radio0'
@@ -47,10 +48,10 @@ config wifi-iface 'default_radio0'
 
 ## 2. Band Steering Leve com `usteer`
 
-Em vez de suites pesadas que consomem muita RAM, o ARK Router utiliza o **`usteer`** para coordenar a troca de bandas:
-- Força dispositivos com suporte a 5 GHz a abandonarem o canal 2.4 GHz congestionado.
-- Recomenda a troca quando o sinal cair abaixo de **-73 dBm**.
-- Desconecta clientes zumbis abaixo de **-82 dBm** com probe response blocking.
+O **`usteer`** pode ser utilizado para coordenar a transição entre bandas (2.4 GHz vs 5 GHz) de forma leve. Os limiares abaixo são exemplos típicos a calibrar:
+- Estimular clientes com suporte a 5 GHz a priorizarem a banda de 5 GHz quando o sinal for forte.
+- Avaliar a transição para 2.4 GHz quando o sinal em 5 GHz degradar (ex.: abaixo de ~`-73 dBm`).
+- Desconectar clientes excessivamente fracos ou distantes (ex.: abaixo de ~`-82 dBm`) para liberar tempo de transmissão (*airtime*).
 
 ### Configuração UCI (`/etc/config/usteer`):
 ```uci
@@ -73,7 +74,7 @@ config wifi-iface 'mesh5'
     option mesh_id 'ark-mesh-backhaul'
     option mesh_fwding '1'
     option encryption 'sae'
-    option key 'ChaveSuperSecretaMesh'
+    option key 'CHANGE_ME_WPA_KEY'
     option network 'lan'
 ```
 - **Vantagem:** O protocolo 802.11s faz roteamento na camada 2 (MAC), permitindo que DHCP e mDNS atravessem a malha sem necessidade de WDS proprietário.

@@ -105,13 +105,14 @@ Em kernels modernos (OpenWrt 21+), as interfaces de rede são portas individuais
 
 ## 3. Wireless e Rádio (`/etc/config/wireless`)
 
-### Diretrizes de Estabilidade Wi-Fi para o ARK Router
-1. **Proteção Anti-Desconexão para IoT / Alexas (2.4 GHz):**
-   - Rádios de 2.4 GHz devem manter `disassoc_low_ack='0'` para evitar que lâmpadas ou assistentes virtuais caiam por sinal flutuante.
-   - Definir `dtim_period='2'` para balancear economia de energia e responsividade.
-2. **Largura de Canal e DFS:**
-   - 2.4 GHz: fixar `htmode='HT20'` ou `HT40` com seleção em canais limpos (1, 6 ou 11).
-   - 5 GHz: no Cudy WR3000 (MT7981), utilizar `HE80` ou `HE160`. Cuidado com canais DFS (52 a 144) que exigem radar check (NOP).
+### Recomendações e Exemplos de Configuração Wi-Fi
+Os parâmetros de rádio dependem do ambiente, da regulamentação local e das capacidades do hardware. Utilize estas diretrizes como referência adaptável:
+1. **Exemplos de Estabilidade para Clientes Legados e IoT (2.4 GHz):**
+   - Caso dispositivos simples apresentem desconexões frequentes por oscilação de sinal, avaliar o ajuste `disassoc_low_ack='0'`.
+   - `dtim_period`: valores entre `1` e `3` equilibram economia de bateria e latência de entrega de multicast.
+2. **Largura de Canal e Canais Operacionais:**
+   - 2.4 GHz: `HT20` oferece maior resistência a interferência em ambientes densos; `HT40` permite maior vazão em ambientes limpos. Priorizar canais sem sobreposição (ex.: 1, 6 ou 11) de acordo com o espectro local.
+   - 5 GHz: `VHT80` ou `HE80`/`HE160` dependem do chip Wi-Fi (ex.: MT7981). Canais DFS (52 a 144) exigem conformidade com NOP (Network Operations Protocol / Radar Detection) e podem atrasar a subida da interface.
 
 ---
 

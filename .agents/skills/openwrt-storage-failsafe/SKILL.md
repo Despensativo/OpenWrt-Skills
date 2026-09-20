@@ -12,7 +12,14 @@ Dominar o mapa de partições MTD da memória Flash SPI, proteger blocos crític
 
 ## 1. Mapa de Partições MTD (`/proc/mtd`)
 
-Em roteadores com 16 MB SPI Flash, a tabela típica se divide em:
+> [!CAUTION]
+> **PROIBIÇÃO DE COMANDOS GENÉRICOS DE MTD OU FLASH:**
+> É terminantemente PROIBIDO executar ou sugerir comandos de escrita em partição (`mtd write`, `dd`, `flash_erase`) ou procedimentos genéricos de botão de reset/TFTP sem antes verificar:
+> 1. O modelo exato da placa: `cat /tmp/sysinfo/model` ou `cat /proc/cpuinfo`.
+> 2. A tabela real de partições do dispositivo ativo: `cat /proc/mtd`.
+> O número das partições MTD (`mtd0`, `mtd2`, etc.) varia entre modelos e targets (ex.: Filogic vs Atheros vs Mediatek MT7621), e gravar no offset errado causará brick permanente no roteador.
+
+Em roteadores de referência com 16 MB SPI Flash (como exemplo ilustrativo), a tabela típica pode se dividir em:
 ```
 dev:    size   erasesize  name
 mtd0: 00040000 00010000 "u-boot"          (Bootloader - NUNCA SOBRESCREVER)

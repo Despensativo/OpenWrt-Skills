@@ -8,16 +8,12 @@ description: Specialist in modern OpenWrt LuCI development (JavaScript client-si
 ## Objetivo e Filosofia Arquitetural
 Esta skill orienta o desenvolvimento, refatoração e auditoria de aplicações e interfaces web para o **LuCI moderno** (OpenWrt 21.02, 23.05, 24.x, 25.x e master).
 
-### ⛔ A Regra Fundamental: Lua CBI está MORTO
-Nas versões modernas do OpenWrt, o backend monolítico em Lua (`luci.model.cbi`, `luci.cbi`, `entry({"admin", ...})`, `luci.template`) foi **completamente descontinuado**.
-O LuCI moderno adota uma arquitetura **100% Client-Side JavaScript**:
-1. O roteador serve apenas arquivos estáticos (HTML esqueleto, JS minificado, CSS) e endpoints JSON-RPC via `rpcd` / `ubus`.
-2. A renderização do DOM, validação de campos e cálculo de formulários acontecem **no navegador do cliente**.
-3. Isso reduz o consumo de RAM do roteador para praticamente zero durante a navegação web, preservando os preciosos 128–256 MB de RAM.
-
-> [!CAUTION]
-> **NUNCA crie ou sugira arquivos `luci.model.cbi` em Lua.**
-> Sempre crie views nativas em JavaScript (`/www/luci-static/resources/view/...`) e menus em JSON (`/usr/share/luci/menu.d/...`).
+### Transição de Arquitetura: Do Lua CBI para LuCI Client-Side JavaScript & ucode
+Nas versões modernas do OpenWrt (21.02 em diante, consolidado no 23.05 e 24.x/25.x), o padrão oficial migrou do backend em Lua (`luci.model.cbi`) para **views Client-Side JavaScript** (`L.view.extend`) e templates **ucode** (`*.ut`):
+1. O roteador serve arquivos estáticos (HTML esqueleto, JS minificado, CSS) e endpoints JSON-RPC via `rpcd` / `ubus`.
+2. A renderização do DOM e a maior parte da lógica de formulário acontecem no navegador do cliente.
+3. Isso reduz substancialmente a pressão de memória RAM na CPU do roteador (ao evitar carregar o interpretador Lua a cada renderização de página), embora as chamadas RPC via `rpcd` e `uhttpd` ainda consumam buffers e recursos de sessão.
+4. Embora pacotes legados de feeds externos ainda possam usar Lua CBI, novos módulos do ARK Router devem ser desenvolvidos estritamente como **views client-side JavaScript** com menus em JSON (`/usr/share/luci/menu.d/*.json`).
 
 ---
 
@@ -173,7 +169,7 @@ O LuCI fornece globalmente o construtor declarativo de elementos `E()` (semelhan
 const card = E('div', { class: 'ex-card', id: 'card-1' }, [
     E('span', { class: 'ex-kicker' }, [ 'STATUS' ]),
     E('h3', {}, [ 'Dispositivo Conectado' ]),
-    E('p', { class: 'ex-muted' }, [ 'IP: 192.168.73.30' ]),
+    E('p', { class: 'ex-muted' }, [ 'IP: 192.168.1.150' ]),
     E('button', {
         class: 'btn cbi-button cbi-button-action',
         style: 'min-height: 40px;',
@@ -242,7 +238,7 @@ return view.extend({
 No retorno do RPC `getDHCPLeases`, o campo do IP chama-se **`ipaddr`**, e NÃO `ip`:
 ```javascript
 // Retorno real:
-// [{ "macaddr": "08:28:02:16:A5:4B", "ipaddr": "192.168.73.30", "hostname": "TV-SALA" }]
+// [{ "macaddr": "00:11:22:33:44:55", "ipaddr": "192.168.1.150", "hostname": "DEVICE-EXAMPLE" }]
 
 // ❌ ERRADO:
 const ip = lease.ip; // Retorna undefined!

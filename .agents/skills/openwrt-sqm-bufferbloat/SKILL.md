@@ -6,27 +6,26 @@ description: Smart Queue Management (SQM), CAKE / FQ-CoDel, cake-mq multi-core s
 # OpenWrt SQM & Bufferbloat Mitigation (ARK Router)
 
 ## Objetivo
-Eliminar a latência induzida por congestionamento (*Bufferbloat*) em conexões de alta e média velocidade, mantendo o ping abaixo de 10ms mesmo quando múltiplos usuários estiverem baixando torrents ou realizando uploads massivos.
+Mitigar a latência induzida por congestionamento (*Bufferbloat*) em conexões de banda larga, buscando manter a estabilidade do ping mesmo quando múltiplos clientes estiverem utilizando a capacidade máxima da conexão.
 
 ---
 
 ## 1. O Que É o Bufferbloat e Como Combatê-lo
 
-Quando uma conexão atinge o limite do link, os buffers do modem da operadora ou do roteador enchem, gerando filas de espera de centenas de milissegundos.
-- **Solução:** O Smart Queue Management (SQM) limita a taxa do roteador para ligeiramente abaixo do gargalo da operadora (regra dos **90% a 95%**), assumindo o controle total da fila e descartando ou marcando pacotes (ECN) antes do estouro do buffer.
+Quando uma conexão atinge o limite do link, os buffers do modem da operadora ou do roteador enchem, gerando filas de espera de dezenas ou centenas de milissegundos.
+- **Solução:** O Smart Queue Management (SQM) limita a taxa do roteador para ligeiramente abaixo do gargalo da operadora (regra empírica dos **90% a 95%**), assumindo o controle da fila e descartando ou marcando pacotes (ECN) antes do estouro do buffer.
 
 ---
 
 ## 2. Algoritmos: CAKE, cake-mq vs FQ-CoDel
 
 - **CAKE (`piece_of_cake.qos`):**
-  - O algoritmo mais avançado do Linux.
   - Combina modelagem de tráfego (*shaper*), isolamento justo por host/fluxo (*Flow Isolation*) e diferenciação de tráfego por DSCP.
-  - **Recomendado para o Cudy WR3000 (MT7981):** A CPU Dual-Core ARM Cortex-A53 a 1.3 GHz roda CAKE a até ~600 Mbps mono-thread.
-- **Avanço OpenWrt 25.12: `cake-mq` (Multi-Queue):**
-  - O branch 25.12 incorporou suporte a instâncias multi-core do CAKE. Em roteadores dual-core ou quad-core como o MT7981, os núcleos distribuem o enfileiramento, permitindo que conexões próximas de 1 Gbps rodem com SQM ativo!
+  - **Hipótese de Capacidade:** Roteadores dual-core modernos como o Cudy WR3000 (MT7981 Cortex-A53 a 1.3 GHz) costumam suportar CAKE confortavelmente em centenas de megabits, mas a vazão máxima sem saturação de CPU deve ser verificada por testes práticos com o utilitário `top`/`htop` sob carga.
+- **Instâncias Multi-Queue (`cake-mq`):**
+  - Em versões recentes do OpenWrt com suporte a `cake-mq`, a distribuição do enfileiramento entre núcleos de CPU é uma hipótese viável para alcançar maior vazão. A eficiência real depende do hardware, afinidade de interrupções (IRQ) e tipo de interface (PPPoE vs IPoE).
 - **FQ-CoDel (`simple.qos`):**
-  - Mais leve para CPUs com menos poder de processamento (DGL-5500 QCA9558 a 720 MHz mono-core).
+  - Algoritmo mais leve, recomendado para CPUs com restrição severa de processamento (como MIPS mono-core de 500–720 MHz no DGL-5500).
 
 ---
 
