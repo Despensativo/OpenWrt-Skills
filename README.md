@@ -104,6 +104,7 @@ Simply point your agent workspace to `skills/` or `.agents/skills/`. All `SKILL.
 3. **Touch Targets**: Minimum 40px useful height for buttons, badges, and toggles.
 4. **Scroll Isolation**: Trapping scroll in LuCI requires locking `.main-right`, not `body`.
 5. **No Synchronous Popups**: Never use `alert()` or `confirm()`.
+6. **Git Hygiene & Zero Binary Bloat**: Never commit compiled firmware images (`.bin`, `.img`, `.iso`, full toolchains) or OpenWrt build trees (`bin/`, `build_dir/`, `staging_dir/`) to Git. Publish compiled sysupgrade artifacts, packages and rootfs dumps exclusively via **GitHub Releases** (up to 2 GB per file) or CI pipelines. Keep repositories well within GitHub Free account guidelines (< 1 GB soft limit, 100 MB single-file hard limit).
 
 ---
 
