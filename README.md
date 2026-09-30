@@ -7,6 +7,8 @@
 > **The Definitive Agentic AI Skills, Rules & Tooling Suite for OpenWrt & LuCI Development.**  
 > Built for embedded networking, low-footprint hardware (16 MB SPI Flash / 128–256 MB RAM), and dual-generation OpenWrt architectures (`fw3`/`iptables` vs `fw4`/`nftables` and `opkg` vs `apk`).
 
+> **Keywords / SEO**: OpenWrt AI skills, Google Antigravity OpenWrt, Cursor rules OpenWrt, Claude Code embedded Linux, LuCI UI development, BusyBox ash scripting, nftables firewall4, CAKE bufferbloat OpenWrt, embedded Linux developer tools.
+
 [![OpenWrt Version](https://img.shields.io/badge/OpenWrt-19.07_%E2%86%92_25.12+-blue?logo=openwrt)](https://openwrt.org)
 [![Skills Count](https://img.shields.io/badge/Agentic%20Skills-11%20Production%20Ready-success)](https://github.com/Despensativo/OpenWrt-Skills)
 [![Hardware Database](https://img.shields.io/badge/ToH%20Models-3%2C030%20Offline%20Cached-orange)](https://github.com/Despensativo/OpenWrt-Skills)
