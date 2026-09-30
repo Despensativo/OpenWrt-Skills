@@ -77,3 +77,7 @@ ARK Router must remain compatible with both generations:
 - **Runbook / Multi-AI Guide**: See `GUIA-INSTALACAO-ROM-CUDY-WR3000-OUTRA-IA.md` for complete step-by-step flashing script, SCP upload with `pscp -scp`, and WSL ImageBuilder compilation instructions.
 - **Overlay Zero-Waste Directive**: When deploying natively to ROM, keep `/etc/sysupgrade.conf` strictly free of `/usr` and `/www` paths to maintain > 2.8 MB free on `/overlay`.
 
+### 7. Git Hygiene & Artifact Release Directive (No Binary Bloat)
+- **Do NOT commit binary builds to Git**: Firmware images (`.bin`, `.img`), full kernel tarballs, or toolchains must NOT be pushed directly to Git history.
+- **GitHub Free Storage Boundaries**: Git repositories should stay < 1 GB (soft limit) with individual files strictly < 100 MB.
+- **Distribution via GitHub Releases**: Large pre-compiled sysupgrade binaries and packages must be published as assets in **GitHub Releases** (supports up to 2 GB per file for free) rather than inflating Git clone size.
