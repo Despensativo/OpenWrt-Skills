@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/openwrt-skills-banner.jpg" alt="OpenWrt-Skills Hero Banner" width="100%">
+</p>
+
 # OpenWrt-Skills 🌐🤖
 
 > **The Definitive Agentic AI Skills, Rules & Tooling Suite for OpenWrt & LuCI Development.**  
