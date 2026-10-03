@@ -13,3 +13,18 @@ tmp/
 .DS_Store
 Thumbs.db
 ehthumbs.db
+
+# Local router artifacts and private operating material
+*.bin
+*.img
+*.iso
+*.ipk
+*.apk
+*.pcap
+*.pcapng
+*.tar.gz
+*backup*.tar
+*backup*.tgz
+Backups/
+Firmware/
+Documentacao privada/

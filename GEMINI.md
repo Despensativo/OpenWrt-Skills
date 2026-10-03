@@ -18,17 +18,17 @@ ARK Router is an advanced, lightweight operating system interface and networking
 
 ### 2. Dual OpenWrt Architecture (Antigo vs. Novo)
 ARK Router must remain compatible with both generations:
-- **OpenWrt Antigo (19.07 - 23.05)**:
+- **OpenWrt legado (19.07 - 21.02, como padrão)**:
   - Reference hardware: D-Link DGL-5500 (Atheros QCA9558), 128 MB RAM, 16 MB Flash.
   - Package manager: `opkg` (`/etc/opkg.conf`, `opkg install/status`).
   - Firewall engine: `iptables` / `firewall3` (`/etc/config/firewall`).
   - LuCI DOM: Rendered with both `<table>` and div-based tables (`<div class="table">`, `.tr`, `.td`).
-- **OpenWrt Novo (24.x - 25.x / master)**:
+- **OpenWrt atual (22.03+ como padrão; confirme no dispositivo)**:
   - Reference hardware: Cudy WR3000 v1 (MediaTek MT7981 Filogic 820), 256 MB RAM, 16 MB Flash.
-  - Package manager: `apk` (`/etc/apk/`, `apk add/info/del`).
+  - Package manager: `opkg` até 24.10; `apk` a partir de 25.12. Detecte no dispositivo.
   - Firewall engine: `nftables` / `firewall4` (`table inet ...`).
   - Backend: `ucode` templates (`*.ut`) and modern RPC.
-- **Portability Rule**: Always detect package manager dynamically (`which apk opkg`), firewall backend (`nft` vs `iptables`), and keep shell scripts compatible with pure BusyBox ash (`/bin/sh`).
+- **Portability Rule**: Detect the available package manager and active firewall service independently; release number is context, not proof. Keep shell scripts compatible with BusyBox ash (`/bin/sh`).
 
 ### 3. UI, Botões e Modais: O Que Dá Certo vs. O Que NÃO Dá
 - **Área de Toque (Mobile First)**: Todo botão, badge clicável ou switch deve ter altura mínima útil de **40px** (`min-height: 40px`).
@@ -71,13 +71,13 @@ ARK Router must remain compatible with both generations:
 - LuCI / Router: `/create-luci-view`, `/audit-ark-theme`, `/verify-router-health`
 - React / Web: `/create-component`, `/refactor-component`, `/create-form`, `/add-tests`, `/audit-accessibility`, `/optimize-performance`, `/setup-dark-mode`
 
-### 6. Native ROM Firmware & ImageBuilder (Cudy WR3000 v1 / filogic)
+### 7. Native ROM Firmware & ImageBuilder (Cudy WR3000 v1 / filogic)
 - **Pre-compiled ROM**: Located at `openwrt-25.12.5-cudy-wr3000-v1-ark-router-squashfs-sysupgrade.bin` in workspace root and `Firmware/`.
 - **Integrity**: SHA-256 `01b2381cba129983049326be06c15285fe3110d128cfafc70abe2173438df957` (12.58 MB).
 - **Runbook / Multi-AI Guide**: See `GUIA-INSTALACAO-ROM-CUDY-WR3000-OUTRA-IA.md` for complete step-by-step flashing script, SCP upload with `pscp -scp`, and WSL ImageBuilder compilation instructions.
 - **Overlay Zero-Waste Directive**: When deploying natively to ROM, keep `/etc/sysupgrade.conf` strictly free of `/usr` and `/www` paths to maintain > 2.8 MB free on `/overlay`.
 
-### 7. Git Hygiene & Artifact Release Directive (No Binary Bloat)
+### 8. Git Hygiene & Artifact Release Directive (No Binary Bloat)
 - **Do NOT commit binary builds to Git**: Firmware images (`.bin`, `.img`), full kernel tarballs, or toolchains must NOT be pushed directly to Git history.
 - **GitHub Free Storage Boundaries**: Git repositories should stay < 1 GB (soft limit) with individual files strictly < 100 MB.
 - **Distribution via GitHub Releases**: Large pre-compiled sysupgrade binaries and packages must be published as assets in **GitHub Releases** (supports up to 2 GB per file for free) rather than inflating Git clone size.

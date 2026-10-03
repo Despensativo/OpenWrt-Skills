@@ -11,6 +11,7 @@ import gzip
 import json
 import argparse
 import subprocess
+import re
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, '..'))
@@ -87,10 +88,17 @@ def format_val(v):
 
 
 def determine_pkg_manager(rel):
-    s = str(rel).lower()
-    if any(v in s for v in ['24.', '25.', 'snapshot', 'master']):
-        return 'apk'
-    return 'opkg'
+    # The ToH describes supported releases, not the firmware installed on a device.
+    # Return a default only when an explicit stable release is present.
+    match = re.search(r'\b(\d{2})\.(\d{2})\b', str(rel))
+    if not match:
+        return 'verificar no dispositivo'
+    version = tuple(map(int, match.groups()))
+    if version >= (25, 12):
+        return 'apk (padrão da versão)'
+    if version <= (24, 10):
+        return 'opkg (padrão da versão)'
+    return 'verificar no dispositivo'
 
 
 def deduce_channel_width(d):

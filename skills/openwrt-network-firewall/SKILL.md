@@ -7,14 +7,14 @@ description: Specialist in OpenWrt networking, routing, DSA switch, wireless, an
 
 ## Visão Geral e Arquitetura Dual
 Esta skill orienta o assistente no desenvolvimento, auditoria e configuração de redes e firewall para o ecossistema ARK Router (OpenWrt).
-O ambiente suporta duas gerações com motores e características distintas:
+As gerações abaixo descrevem padrões de distribuição; confirme o backend e a topologia no dispositivo:
 
-- **Geração Antiga (OpenWrt 19.07 - 22.03)**:
+- **Firewall legado (padrão até OpenWrt 21.02)**:
   - Hardware de referência: D-Link DGL-5500 (Atheros QCA9558, 128 MB RAM, 16 MB Flash).
   - Firewall: `firewall3` (`fw3`) baseado em `iptables`.
   - Switch: `swconfig` legado (`switch0`, `eth0.1`).
   - Regras customizadas: `/etc/firewall.user`.
-- **Geração Nova (OpenWrt 23.05 - 25.x / master)**:
+- **Firewall4 (padrão desde OpenWrt 22.03)**:
   - Hardware de referência: Cudy WR3000 v1 (MediaTek MT7981 Filogic 820, 256 MB RAM, 16 MB Flash).
   - Firewall: `firewall4` (`fw4`) baseado em `nftables`.
   - Switch: **DSA** (*Distributed Switch Architecture*, `br-lan`, `br-lan.1`, `ports lan1 lan2 lan3`).
@@ -26,19 +26,20 @@ O ambiente suporta duas gerações com motores e características distintas:
 
 ### Detecção Dinâmica Universal Obrigatória
 No ecossistema ARK Router, a detecção de firewall está centralizada em `/usr/lib/ark/common.sh`.
-**NUNCA** verifique o motor testando apenas a existência de `iptables` ou `ip6tables` no path (`command -v iptables`), pois no OpenWrt 23.05+ eles existem como wrappers e qualquer execução acidental induz o kernel a alocar tabelas legadas do Netfilter.
+**NUNCA** escolha o motor apenas pela presença de `iptables` ou `ip6tables` no path: pacotes de compatibilidade podem coexistir com `fw4`. Verifique o serviço/configuração ativa antes de alterar regras.
 
 Use sempre:
 ```sh
 . /usr/lib/ark/common.sh
 
 if is_fw4; then
-    # OpenWrt Moderno (23.05 a 25.x): 100% puro em nftables e UCI
+    # fw4: nftables e UCI
     # TERMINANTEMENTE PROIBIDO invocar comandos iptables/ip6tables!
 elif is_fw3; then
-    # OpenWrt Legado (19.07 a 22.03): 100% retrocompatibilidade com iptables (DGL-5500, etc.)
+    # fw3: iptables e UCI
 fi
 ```
+Fora do ARK Router, confirme o backend com inspeção somente leitura. Se nenhum backend puder ser confirmado, pare antes de escrever regras.
 
 ### Regra de Ouro de Isolamento dos Motores:
 1. **Ambiente Moderno (`fw4` / nftables)**:
@@ -145,3 +146,9 @@ Prefira sempre consultas estruturadas via `ubus` em vez de `ifconfig` ou `grep`:
 4. **Reinicialização Segura:**
    - Prefira `/etc/init.d/firewall reload` em vez de `restart`.
    - Utilize `/etc/init.d/network reload` em vez de comandos destrutivos como `ifdown -a`.
+
+## 6. Descobertas operacionais reutilizáveis
+
+- `mwan3` distribui conexões conforme política; uma transferência isolada não comprova soma de banda. `/var/run/mwan3track` fornece status barato, mas não comprova failover ou conectividade fim a fim. Verifique rota e tráfego por WAN.
+- Se a interface oferece desligamento por banda Wi-Fi, reflita o estado do UCI e rejeite no backend uma tentativa de desligar todas as bandas de gerência. Preserve também um caminho cabeado de recuperação.
+- DSA e `swconfig` dependem do target e driver. Confira as portas reais e a configuração de bridge antes de escrever VLANs.

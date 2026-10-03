@@ -21,15 +21,10 @@ Você DEVE avaliar qualquer código, script, configuração UCI ou componente de
 
 ### 2. DUALIDADE DE ARQUITETURA OPENWRT (ANTIGO VS NOVO)
 O código deve funcionar ou detectar dinamicamente a geração do OpenWrt:
-- **Geração Antiga (19.07 a 23.05 - DGL-5500):**
-  - Gerenciador de pacotes: `opkg` (`/etc/opkg.conf`).
-  - Motor de Firewall: `firewall3` (`fw3`) baseado em `iptables`.
-  - Switch: `swconfig` legado (`switch0`, `eth0.1`).
-- **Geração Nova (24.x a 25.x / master - Cudy WR3000):**
-  - Gerenciador de pacotes: `apk` (`/etc/apk/`).
-  - Motor de Firewall: `firewall4` (`fw4`) baseado em `nftables` (`table inet fw4`).
-  - Switch: **DSA** (*Distributed Switch Architecture*, portas independentes `lan1`, `lan2` em `br-lan`).
-- **Regra:** NUNCA assuma que `opkg` ou `iptables` existem sem detecção dinâmica (`which apk opkg`, `command -v nft`).
+- **Pacotes:** OpenWrt 24.10 e anteriores usam `opkg` por padrão; 25.12 e posteriores usam `apk` por padrão. Confirme o gerenciador instalado.
+- **Firewall:** OpenWrt 21.02 e anteriores usam `fw3`/`iptables` por padrão; desde 22.03 o padrão é `fw4`/`nftables`. Confirme o serviço ativo e não execute `iptables` como simples teste em um sistema `fw4`.
+- **Switch:** `swconfig` ou DSA dependem do target e driver. Inspecione portas e bridge reais antes de propor VLANs.
+- **Regra:** Detecte essas capacidades separadamente no alvo; não deduza todas a partir da versão ou do modelo.
 
 ---
 
