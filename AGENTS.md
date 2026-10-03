@@ -67,15 +67,13 @@ ARK Router must remain compatible with both generations:
 10. `openwrt-storage-failsafe`: MTD partition table, factory/ART backup, Telnet failsafe, U-Boot TFTP.
 11. `openwrt-luci-modern`: Modern LuCI JavaScript views (L.view.extend), E() DOM builder, JSON menus, RPC ACLs, no Lua CBI.
 
-### 6. Cursor AI & Assistant Commands Available
-- LuCI / Router: `/create-luci-view`, `/audit-ark-theme`, `/verify-router-health`
-- React / Web: `/create-component`, `/refactor-component`, `/create-form`, `/add-tests`, `/audit-accessibility`, `/optimize-performance`, `/setup-dark-mode`
+### 6. Skill Distribution
+- Maintain skills in `skills/`; mirror them to `.agents/skills/` and run `python scripts/check_skill_mirrors.py` before publishing.
+- This repository ships skills and documentation. Cursor commands from other ARK workspaces are not part of this checkout.
 
 ### 7. Native ROM Firmware & ImageBuilder (Cudy WR3000 v1 / filogic)
-- **Pre-compiled ROM**: Located at `openwrt-25.12.5-cudy-wr3000-v1-ark-router-squashfs-sysupgrade.bin` in workspace root and `Firmware/`.
-- **Integrity**: SHA-256 `01b2381cba129983049326be06c15285fe3110d128cfafc70abe2173438df957` (12.58 MB).
-- **Runbook / Multi-AI Guide**: See `GUIA-INSTALACAO-ROM-CUDY-WR3000-OUTRA-IA.md` for complete step-by-step flashing script, SCP upload with `pscp -scp`, and WSL ImageBuilder compilation instructions.
-- **Overlay Zero-Waste Directive**: When deploying natively to ROM, keep `/etc/sysupgrade.conf` strictly free of `/usr` and `/www` paths to maintain > 2.8 MB free on `/overlay`.
+- This repository does not contain a ROM image or firmware runbook. Verify the exact board, image source, SHA-256 and current runbook in the ARK Router project before any firmware operation.
+- When ARK Router files are built into SquashFS, do not preserve duplicate `/usr` or `/www` paths via `/etc/sysupgrade.conf`; measure free `/overlay` after first boot. A later package install can still consume the writable overlay.
 
 ### 8. Git Hygiene & Artifact Release Directive (No Binary Bloat)
 - **Do NOT commit binary builds to Git**: Firmware images (`.bin`, `.img`), full kernel tarballs, or toolchains must NOT be pushed directly to Git history.

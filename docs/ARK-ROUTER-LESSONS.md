@@ -30,6 +30,11 @@ These are reusable engineering observations drawn from the local ARK Router chec
 
 - Distinguish static inspection, simulator or browser checks, virtual machine tests, and physical router tests. Record the code or package revision for each result; a generated report or old screenshot does not prove a new build survived reboot or preserved traffic.
 - Keep firmware images, backups, packet captures, credentials and private operating notes out of this skills repository. Publish redistributable binary artifacts through a release channel only after target, hash, compatibility and provenance checks.
+- Distinguish a package installed on writable `/overlay` from files embedded in SquashFS. Check free space before and after installation. A preinstall cutoff must include the unpacked package, dependencies and a reserve for UCI.
+- Keep a backup outside `/tmp` when it must survive reboot. Source copying does not register an `apk` or `opkg` package; verify the installed state and rollback path separately.
+- When removing a local DNS resolver, restore the previous UCI state and prove that client DNS works afterward. Do not silently replace a user's DNS policy with public resolvers. If `rpcd` or `uhttpd` must restart, allow the current RPC response to finish and check final state after reconnect.
+
+[`ARK-MD-CROSSCHECK.md`](ARK-MD-CROSSCHECK.md) records specific documentation conflicts found in the ARK Router Markdown and points to the corresponding code.
 
 ## External references
 

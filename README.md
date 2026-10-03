@@ -113,6 +113,8 @@ Simply point your agent workspace to `skills/` or `.agents/skills/`. All `SKILL.
 
 [`docs/ARK-ROUTER-LESSONS.md`](docs/ARK-ROUTER-LESSONS.md) records reusable findings from the ARK Router implementation, with source pointers and limits on what has actually been verified. It covers RAM caches, LuCI layout, Wi-Fi safety, multi-WAN status, SQM, and release evidence.
 
+[`docs/ARK-MD-CROSSCHECK.md`](docs/ARK-MD-CROSSCHECK.md) lists conflicts found in the ARK Router Markdown that should be resolved in that repository, with code and official OpenWrt references.
+
 ---
 
 ## 🤝 Contributing
