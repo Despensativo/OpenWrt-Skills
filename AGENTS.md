@@ -40,7 +40,7 @@ ARK Router must remain compatible with both generations:
   - O backdrop escuro (`#modal_overlay`) é fixo em tela inteira (`position: fixed; inset: 0; width: 100vw; height: 100dvh; pointer-events: none` quando inativo).
   - A caixa de diálogo (`.modal`, `.cbi-modal`) é o cartão central. NUNCA aplicar largura fixa ou margens diretamente em `#modal_overlay`.
 - **Isolamento de Scroll no LuCI**:
-  - No LuCI (Argon / Bootstrap), o `body` tem `overflow: hidden; height: 100vh;`. Quem rola é o contêiner `.main-right`. Ao abrir modais ou menu lateral, travar `.main-right` com `overflow: hidden !important; pointer-events: none !important;`.
+  - No LuCI (Tema Ark / Bootstrap), o `body` tem `overflow: hidden; height: 100vh;`. Quem rola é o contêiner `.main-right`. Ao abrir modais ou menu lateral, travar `.main-right` com `overflow: hidden !important; pointer-events: none !important;`.
 - **Contenção Flex/Grid**:
   - SEMPRE usar `min-width: 0` em filhos diretos de `display: flex` e `display: grid` para evitar que endereços MAC, hostnames longos ou URLs empurrem a tela horizontalmente.
 - **O que NÃO fazer (Proibido)**:
@@ -79,3 +79,6 @@ ARK Router must remain compatible with both generations:
 - **Do NOT commit binary builds to Git**: Firmware images (`.bin`, `.img`), full kernel tarballs, or toolchains must NOT be pushed directly to Git history.
 - **GitHub Free Storage Boundaries**: Git repositories should stay < 1 GB (soft limit) with individual files strictly < 100 MB.
 - **Distribution via GitHub Releases**: Large pre-compiled sysupgrade binaries and packages must be published as assets in **GitHub Releases** (supports up to 2 GB per file for free) rather than inflating Git clone size.
+
+### 12ª Skill Incorporada (v1.5.17)
+- **`js-performance-optimization`** (`skills/js-performance-optimization/SKILL.md`): Arquitetura modular em `src/modules/`, DOM diffing cirúrgico, `AbortController` para listeners, batching RPC e orçamento de bundle (`< 150 KB` gzipped para app, `< 60 KB` para `ark-theme.js`).

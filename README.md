@@ -10,7 +10,7 @@
 > **Keywords / SEO**: OpenWrt AI skills, Google Antigravity OpenWrt, Cursor rules OpenWrt, Claude Code embedded Linux, LuCI UI development, BusyBox ash scripting, nftables firewall4, CAKE bufferbloat OpenWrt, embedded Linux developer tools.
 
 [![OpenWrt Version](https://img.shields.io/badge/OpenWrt-19.07_%E2%86%92_25.12+-blue?logo=openwrt)](https://openwrt.org)
-[![Skills Count](https://img.shields.io/badge/Agentic%20Skills-11%20Production%20Ready-success)](https://github.com/Despensativo/OpenWrt-Skills)
+[![Skills Count](https://img.shields.io/badge/Agentic%20Skills-12%20Production%20Ready-success)](https://github.com/Despensativo/OpenWrt-Skills)
 [![Hardware Database](https://img.shields.io/badge/ToH%20Models-3%2C030%20Offline%20Cached-orange)](https://github.com/Despensativo/OpenWrt-Skills)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -31,7 +31,7 @@ These skills provide checks and patterns; validate each change against the targe
 
 ---
 
-## 🧩 The 11 Specialized Agent Skills
+## 🧩 The 12 Specialized Agent Skills
 
 Each skill has YAML frontmatter. `skills/` is the maintained source; `.agents/skills/` is a mirrored copy for tools that discover that path. Run `python scripts/check_skill_mirrors.py` after editing a skill.
 
@@ -48,6 +48,7 @@ Each skill has YAML frontmatter. `skills/` is the maintained source; `.agents/sk
 | 9 | **[`openwrt-sqm-bufferbloat`](skills/openwrt-sqm-bufferbloat/SKILL.md)** | CAKE & Latency Mitigation | CAKE (`piece_of_cake.qos`), multi-core considerations, framing overhead, and measured latency under load. |
 | 10 | **[`openwrt-storage-failsafe`](skills/openwrt-storage-failsafe/SKILL.md)** | MTD & Unbrick Recovery | `/proc/mtd` partition tables, `factory`/ART backup preservation, Telnet Failsafe mode, U-Boot TFTP rescue. |
 | 11 | **[`openwrt-luci-modern`](skills/openwrt-luci-modern/SKILL.md)** | Modern LuCI Client-Side JS | Pure JS views (`L.view.extend`), `E()` DOM builder, JSON menus, RPC ACLs, no legacy Lua CBI. |
+| 12 | **[`js-performance-optimization`](skills/js-performance-optimization/SKILL.md)** | JS Performance & RPC Batching | Modular `src/modules/` architecture, surgical DOM diffing, `AbortController` listener cleanup, ubus RPC batching. |
 
 ---
 
@@ -124,3 +125,6 @@ Contributions, bug reports, and new hardware profiles are welcome! Feel free to 
 ## 📄 License
 
 Distributed under the [MIT License](LICENSE).
+
+### 12ª Skill Incorporada (v1.5.17)
+- **`js-performance-optimization`** (`skills/js-performance-optimization/SKILL.md`): Arquitetura modular em `src/modules/`, DOM diffing cirúrgico, `AbortController` para listeners, batching RPC e orçamento de bundle (`< 150 KB` gzipped para app, `< 60 KB` para `ark-theme.js`).

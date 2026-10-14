@@ -9,7 +9,11 @@ MIRROR = ROOT / ".agents" / "skills"
 
 
 def files_under(root: Path) -> dict[Path, bytes]:
-    return {path.relative_to(root): path.read_bytes() for path in root.rglob("*") if path.is_file()}
+    return {
+        path.relative_to(root): path.read_bytes()
+        for path in root.rglob("*")
+        if path.is_file() and not path.name.startswith("._")
+    }
 
 
 def main() -> int:
